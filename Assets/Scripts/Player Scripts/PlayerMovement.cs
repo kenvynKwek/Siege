@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public Vector2 movement;
+
     private float speed = 1.5f;
     private float accelerationRate = 10f;
     private float decelerationRate = 10f;
@@ -21,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 movement = Vector2.zero;
+        movement = Vector2.zero;
 
         if (Input.GetKey(KeyCode.UpArrow)) movement += Vector2.up * speed;
         if (Input.GetKey(KeyCode.DownArrow)) movement += Vector2.down * speed;
