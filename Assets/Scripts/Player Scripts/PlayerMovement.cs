@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
     private float speed = 1.5f;
@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour
     private float decelerationRate = 10f;
 
     private Vector2 targetVelocity; // The desired velocity
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,20 +23,13 @@ public class PlayerScript : MonoBehaviour
     {
         Vector2 movement = Vector2.zero;
 
-        if (Input.GetKey(KeyCode.UpArrow))
-            movement += Vector2.up * speed;
-        if (Input.GetKey(KeyCode.DownArrow))
-            movement += Vector2.down * speed;
-        if (Input.GetKey(KeyCode.LeftArrow))
-            movement += Vector2.left * speed;
-        if (Input.GetKey(KeyCode.RightArrow))
-            movement += Vector2.right * speed;
+        if (Input.GetKey(KeyCode.UpArrow)) movement += Vector2.up * speed;
+        if (Input.GetKey(KeyCode.DownArrow)) movement += Vector2.down * speed;
+        if (Input.GetKey(KeyCode.LeftArrow)) movement += Vector2.left * speed;
+        if (Input.GetKey(KeyCode.RightArrow)) movement += Vector2.right * speed;
 
-        if (movement != Vector2.zero)
-        {
-            movement = movement.normalized * speed;
-        }
-
+        // normalize to keep diagonal movement speed consistent w/ up/down/left/right
+        if (movement != Vector2.zero) movement = movement.normalized * speed;
         targetVelocity = movement * speed;
     }
 
