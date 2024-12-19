@@ -7,7 +7,9 @@ public class PlayerHealth : MonoBehaviour
     private int maxHealth = 3;
     private int currentHealth;
 
-    public GameObject gameOverScreen;
+    // event for 0 health
+    public delegate void zeroHealthAction();
+    public static event zeroHealthAction zeroHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +20,7 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (currentHealth <= 0) zeroHealth?.Invoke();
     }
 
     /// <summary>
@@ -28,13 +30,5 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-
-        if (currentHealth <= 0) Die();
-    }
-
-    void Die()
-    {
-        Time.timeScale = 0f; // freeze screen
-        gameOverScreen.SetActive(true); // display "game over" message
     }
 }
