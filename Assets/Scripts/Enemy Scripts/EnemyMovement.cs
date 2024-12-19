@@ -7,6 +7,8 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     private GameObject player;
+    private int damage = 1;
+
     public float moveSpeed = 0.5f;
     public float rotationOffset = -90f;
 
@@ -29,5 +31,18 @@ public class EnemyMovement : MonoBehaviour
 
         // Move the enemy toward the player independently of rotation
         transform.position = Vector2.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            // deal damage
+            PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
+            if (playerHealth != null) playerHealth.TakeDamage(damage);
+
+            // destroy self ('enemy' game object)
+            Destroy(gameObject);
+        }
     }
 }
