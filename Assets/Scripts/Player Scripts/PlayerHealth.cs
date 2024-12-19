@@ -7,6 +7,8 @@ public class PlayerHealth : MonoBehaviour
     private int maxHealth = 3;
     private int currentHealth;
 
+    public GameObject gameOverScreen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,9 +34,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        // freeze screen
-        Time.timeScale = 0f;
-
-        // display "game over" message
+        Time.timeScale = 0f; // freeze screen
+        gameOverScreen.SetActive(true); // display "game over" message
     }
 }
