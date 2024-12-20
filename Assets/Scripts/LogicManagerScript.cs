@@ -32,7 +32,6 @@ public class LogicManagerScript : MonoBehaviour
         PlayerHealth.zeroHealth -= GameOver; // unsubscribe from event => so its called only once
         Time.timeScale = 0f; // freeze screen
         gameOverUI.SetActive(true); // display "game over" message
-        Debug.Log("time has been frozen");
     }
 
     /// <summary>
