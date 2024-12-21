@@ -23,9 +23,12 @@ public class LogicManagerScript : MonoBehaviour
     void Update()
     {
         if (gameOverUI.activeSelf && Input.GetKeyDown(KeyCode.Return)) RestartGame();
-        
-        if (!pauseUI.activeSelf && Input.GetKeyDown(KeyCode.Escape)) PauseGame();
-        else if (pauseUI.activeSelf && Input.GetKeyDown(KeyCode.Escape)) ResumeGame();
+
+        if (!gameOverUI.activeSelf)
+        {
+            if (!pauseUI.activeSelf && Input.GetKeyDown(KeyCode.Escape)) PauseGame();
+            else if (pauseUI.activeSelf && Input.GetKeyDown(KeyCode.Escape)) ResumeGame();
+        }
     }
 
     /// <summary>
