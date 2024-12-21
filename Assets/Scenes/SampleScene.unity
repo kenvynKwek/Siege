@@ -651,6 +651,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04c9436455657345b38ec1cc25abe26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 8831846985398074040, guid: 4af467179c158424ea4db40d5e1fb0e3, type: 3}
+  fireTimer: 0
+  fireRate: 1
+  shootingRange: 10
+  rotationOffset: -90
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
