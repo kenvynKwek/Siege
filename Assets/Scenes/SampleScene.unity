@@ -787,9 +787,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8831846985398074040, guid: 4af467179c158424ea4db40d5e1fb0e3, type: 3}
   fireTimer: 0
-  fireRate: 1
+  fireRate: 0.8
   shootingRange: 0.6
-  rotationOffset: -90
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,6 +1097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverUI: {fileID: 353277946}
+  pauseUI: {fileID: 1012301955}
 --- !u!1 &1426986922
 GameObject:
   m_ObjectHideFlags: 0
