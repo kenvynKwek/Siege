@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class LogicManagerScript : MonoBehaviour
 {
     public GameObject gameOverUI;
+    public GameObject pauseUI;
 
     void OnEnable()
     {
@@ -22,6 +23,12 @@ public class LogicManagerScript : MonoBehaviour
     void Update()
     {
         if (gameOverUI.activeSelf && Input.GetKeyDown(KeyCode.Return)) RestartGame();
+
+        if (!gameOverUI.activeSelf)
+        {
+            if (!pauseUI.activeSelf && Input.GetKeyDown(KeyCode.Escape)) PauseGame();
+            else if (pauseUI.activeSelf && Input.GetKeyDown(KeyCode.Escape)) ResumeGame();
+        }
     }
 
     /// <summary>
@@ -29,9 +36,12 @@ public class LogicManagerScript : MonoBehaviour
     /// </summary>
     void GameOver()
     {
-        PlayerHealth.zeroHealth -= GameOver; // unsubscribe from event => so its called only once
-        Time.timeScale = 0f; // freeze screen
-        gameOverUI.SetActive(true); // display "game over" message
+        // unsubscribe from event => so its called only once
+        PlayerHealth.zeroHealth -= GameOver;
+        // freeze screen
+        Time.timeScale = 0f;
+        // display "game over" message
+        gameOverUI.SetActive(true);
     }
 
     /// <summary>
@@ -39,7 +49,25 @@ public class LogicManagerScript : MonoBehaviour
     /// </summary>
     void RestartGame()
     {
-        Time.timeScale = 1; // unfreeze
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // reload scene
+        // unfreeze
+        Time.timeScale = 1f;
+        // reload scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void PauseGame()
+    {
+        // freeze
+        Time.timeScale = 0f;
+        // display "pause" message
+        pauseUI.SetActive(true);
+    }
+
+    void ResumeGame()
+    {
+        // unfreeze
+        Time.timeScale = 1f;
+        // set "pause" message to inactive
+        pauseUI.SetActive(false);
     }
 }

@@ -16,7 +16,7 @@ public class EnemySpawn : MonoBehaviour
         Down
     }
     private float spawnTimer = 0f;
-    private float spawnRate = 0.7f;
+    public float spawnRate;
 
     // Start is called before the first frame update
     void Start()

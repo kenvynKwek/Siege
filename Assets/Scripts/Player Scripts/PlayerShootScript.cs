@@ -9,10 +9,11 @@ using UnityEngine;
 public class PlayerShootScript : MonoBehaviour
 {
     public GameObject projectilePrefab;
-    public float fireTimer = 0f;
-    public float fireRate = 0.8f;
-    public float shootingRange = 0.6f;
-    public float rotationOffset = -90f;
+    public float fireRate;
+    public float nextFireTime = 0f;
+    public float shootingRange;
+
+    private float rotationOffset = -90f;
 
     // Start is called before the first frame update
     void Start()
@@ -23,14 +24,14 @@ public class PlayerShootScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        fireTimer += Time.deltaTime;
-
-        if (fireTimer >= fireRate)
+        if (Time.time >= nextFireTime)
         {
             GameObject target = FindNearestEnemy();
-            if (target != null) Shoot(target);
-
-            fireTimer = 0f;
+            if (target != null)
+            {
+                Shoot(target);
+                nextFireTime = Time.time + fireRate;
+            }
         }
     }
 
