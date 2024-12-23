@@ -5,12 +5,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public Vector2 movement;
+    public float speed;
+    public float accelerationRate;
+    public float decelerationRate;
 
-    private float speed = 1.5f;
-    private float accelerationRate = 10f;
-    private float decelerationRate = 10f;
-
+    private Vector2 movement;
     private Vector2 targetVelocity; // The desired velocity
 
 

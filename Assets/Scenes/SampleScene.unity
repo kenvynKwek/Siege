@@ -877,7 +877,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 517872554}
-  movement: {x: 0, y: 0}
+  speed: 1.1
+  accelerationRate: 7
+  decelerationRate: 7
 --- !u!114 &517872556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -920,9 +922,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8831846985398074040, guid: 4af467179c158424ea4db40d5e1fb0e3, type: 3}
-  fireRate: 0.8
-  nextFireTime: 0
-  shootingRange: 0.6
+  fireRate: 0.7
+  shootingRange: 0.55
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

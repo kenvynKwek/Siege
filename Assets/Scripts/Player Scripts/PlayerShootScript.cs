@@ -10,9 +10,9 @@ public class PlayerShootScript : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public float fireRate;
-    public float nextFireTime = 0f;
     public float shootingRange;
 
+    private float nextFireTime = 0f;
     private float rotationOffset = -90f;
 
     // Start is called before the first frame update
