@@ -7,11 +7,10 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     private GameObject player;
-    private int damage = 1;
+    private float rotationOffset = -90f;
 
-    public float moveSpeed = 0.5f;
-    public float rotationOffset = -90f;
-
+    public int damage;
+    public float moveSpeed;
 
     // Start is called before the first frame update
     void Start()
