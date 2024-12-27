@@ -4,7 +4,7 @@ using UnityEngine;
 
 // bounces the player back in the opposite direction upon collision
 
-public class WallScript : MonoBehaviour
+public class Wall : MonoBehaviour
 {
     public float bounceForce;
 

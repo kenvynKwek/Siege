@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LogicManagerScript : MonoBehaviour
+public class LogicManager : MonoBehaviour
 {
     public GameObject gameOverUI;
     public GameObject pauseUI;

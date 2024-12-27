@@ -6,7 +6,7 @@ using UnityEngine;
 
 // automatically shoots projectiles from attached game object center to targets in a radius
 
-public class PlayerShootScript : MonoBehaviour
+public class PlayerShoot : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public float fireRate;
