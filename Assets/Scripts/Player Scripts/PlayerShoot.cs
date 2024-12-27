@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 // automatically shoots projectiles from attached game object center to targets in a radius
@@ -51,7 +49,7 @@ public class PlayerShoot : MonoBehaviour
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.Euler(0, 0, angle));
 
         // access projectile attributes
-        ProjectileScript projectileScript = projectile.GetComponent<ProjectileScript>();
+        Projectile projectileScript = projectile.GetComponent<Projectile>();
         float projectileSpeed = projectileScript.projectileSpeed;
 
         // set velocity
