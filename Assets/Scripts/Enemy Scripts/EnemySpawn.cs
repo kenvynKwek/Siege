@@ -6,16 +6,9 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
-    public GameObject enemy;
-
-    private enum SpawnArea
-    {
-        Left,
-        Right,
-        Top,
-        Down
-    }
     private float spawnTimer = 0f;
+
+    public GameObject enemy;
     public float spawnRate;
 
     // Start is called before the first frame update
@@ -39,38 +32,18 @@ public class EnemySpawn : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets a random spawn point for the 'enemy' game object that is outside the play area perimeter
+    /// Gets a random spawn point for the 'enemy' game object within the play area perimeter
     /// </summary>
     /// <returns>A random position as a Vector3</returns>
     Vector3 getRandomEnemySpawnPoint()
     {
         // spawn perimeters just outside of play area
-        float leftSpawnLine = -1.70f;
-        float rightSpawnLine = 1.70f;
-        float topSpawnLine = 1.0f;
-        float bottomSpawnLine = -1.0f;
+        float left = -2.45f;
+        float right = 2.45f;
+        float top = 1.4f;
+        float bottom = -1.4f;
 
-        int spawnArea = Random.Range(0, 4); // get a random spawn area (left/right/top/down)
-        Vector3 spawnPoint = Vector3.zero;
-
-        // get a spawn point within a spawn area
-        switch ((SpawnArea)spawnArea)
-        {
-            case SpawnArea.Left:
-                spawnPoint = new Vector3(leftSpawnLine, Random.Range(bottomSpawnLine, topSpawnLine), 0f);
-                break;
-            case SpawnArea.Right:
-                spawnPoint = new Vector3(rightSpawnLine, Random.Range(bottomSpawnLine, topSpawnLine), 0f);
-                break;
-            case SpawnArea.Top:
-                spawnPoint = new Vector3(Random.Range(leftSpawnLine, rightSpawnLine), topSpawnLine, 0f);
-                break;
-            case SpawnArea.Down:
-                spawnPoint = new Vector3(Random.Range(leftSpawnLine, rightSpawnLine), bottomSpawnLine, 0f);
-                break;
-            default:
-                break;
-        }
+        Vector3 spawnPoint = new Vector3(Random.Range(left, right), Random.Range(bottom, top), 0f);
 
         return spawnPoint;
     }
