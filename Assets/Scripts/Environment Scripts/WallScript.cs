@@ -20,19 +20,22 @@ public class WallScript : MonoBehaviour
 
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        // get player rigidbody
-        Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
-
-        if (rb != null)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            // get opposite of player direction
-            Vector2 playerVelocity = rb.velocity;
-            Vector2 oppositeDirection = -playerVelocity.normalized;
+            // get player rigidbody
+            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
 
-            // bounce player back
-            rb.velocity = oppositeDirection * bounceForce;
+            if (rb != null)
+            {
+                // get bounce direction perpendicular to wall surface
+                // -ve to invert because somehow the wall is upside down
+                Vector2 collisionNormal = -collision.GetContact(0).normal;
+
+                // bounce player back
+                rb.AddForce(collisionNormal * bounceForce, ForceMode2D.Impulse);
+            }
         }
     }
 }
