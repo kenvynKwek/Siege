@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public float health;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if (health <= 0)
         {
-            Destroy(gameObject);
+            DestroyEnemy();
         }
     }
 
@@ -28,5 +29,20 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+    }
+
+    /// <summary>
+    /// Destroy the enemy game object.
+    /// </summary>
+    private void DestroyEnemy()
+    {
+        // make enemy invalid to disable movement & not be targeted by projectiles
+        gameObject.tag = "Untagged";
+
+        // destroy animation
+        animator.SetBool("isDestroyed", true);
+
+        float destroyAnimationDelay = animator.GetCurrentAnimatorStateInfo(0).length;
+        Destroy(gameObject, destroyAnimationDelay);
     }
 }
