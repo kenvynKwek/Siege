@@ -6,6 +6,7 @@ public class EnemyHealth : MonoBehaviour
 {
     public float health;
     public Animator animator;
+    public int damage;
 
     // Start is called before the first frame update
     void Start()
@@ -44,5 +45,18 @@ public class EnemyHealth : MonoBehaviour
 
         float destroyAnimationDelay = animator.GetCurrentAnimatorStateInfo(0).length;
         Destroy(gameObject, destroyAnimationDelay);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            // deal damage
+            PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
+            if (playerHealth != null) playerHealth.TakeDamage(damage);
+
+            // destroy self ('enemy' game object)
+            Destroy(gameObject);
+        }
     }
 }
