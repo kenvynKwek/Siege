@@ -56,7 +56,7 @@ public class PlayerShoot : MonoBehaviour
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
         rb.velocity = direction * projectileSpeed;
 
-        // ignore collision w/ pl○ayer
+        // ignore collision w/ player
         Collider2D playerCollider = GetComponent<Collider2D>();
         Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
         Physics2D.IgnoreCollision(playerCollider, projectileCollider);

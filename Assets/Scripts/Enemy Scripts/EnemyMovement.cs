@@ -9,7 +9,6 @@ public class EnemyMovement : MonoBehaviour
     private GameObject player;
     private float rotationOffset = -90f;
 
-    public int damage;
     public float moveSpeed;
     public Animator animator;
 
@@ -41,19 +40,6 @@ public class EnemyMovement : MonoBehaviour
 
             // Move the enemy toward the player independently of rotation
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            // deal damage
-            PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
-            if (playerHealth != null) playerHealth.TakeDamage(damage);
-
-            // destroy self ('enemy' game object)
-            Destroy(gameObject);
         }
     }
 
