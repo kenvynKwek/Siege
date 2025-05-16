@@ -10,6 +10,7 @@ public class LogicManager : MonoBehaviour
 
     void OnEnable()
     {
+        // subscribe GameOver() function to zeroHealth event
         PlayerHealth.zeroHealth += GameOver;
     }
 

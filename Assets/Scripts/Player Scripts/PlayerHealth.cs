@@ -8,18 +8,18 @@ public class PlayerHealth : MonoBehaviour
 {
     private int maxHealth = 3;
     private int currentHealth;
+
+    // immunity variables
     private bool isImmune = false;
     private SpriteRenderer spriteRenderer;
+    private float defaultImmunityDuration = 1.5f;
+    private float immunityFlashIntervalDuration = 0.15f;
 
     public GameObject[] hearts; // health UI
 
     // event for 0 health
     public delegate void zeroHealthAction();
     public static event zeroHealthAction zeroHealth;
-
-    // immunity variables
-    public float immunityDuration;
-    public float flashInterval;
 
     // Start is called before the first frame update
     void Start()
@@ -42,27 +42,30 @@ public class PlayerHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// Subtracts damage from the 'Player' game object's currentHealth
+    /// Subtracts damage from the player's currentHealth.
     /// </summary>
     /// <param name="damage">The damage the player will take</param>
     public void TakeDamage(int damage)
     {
-        // if immune, do nth
-        if (isImmune)
+        if (isImmune) // if immune, do nth
         {
             return;
         }
-        else
+        else // else not immune & get hit
         {
-            // else not immune & get hit
-            // set immune to true
             // update health & UI
-            // currentHealth -= damage;
-            StartCoroutine(startImmunity());
+
+            currentHealth -= damage;
+            StartCoroutine(StartImmunity(defaultImmunityDuration));
         }
     }
 
-    private IEnumerator startImmunity()
+    /// <summary>
+    /// This function grants the player temporary immunity.
+    /// </summary>
+    /// <param name="immunityDuration">Total duration of immunity time.</param>
+    /// <returns>An IEnumerator for coroutine timing.</returns>
+    private IEnumerator StartImmunity(float immunityDuration)
     {
         isImmune = true;
         // check duration, if times up, set immune to false
@@ -72,13 +75,12 @@ public class PlayerHealth : MonoBehaviour
         while (elapsedTime < immunityDuration)
         {
             spriteRenderer.enabled = false;
-            yield return new WaitForSeconds(flashInterval);
+            yield return new WaitForSeconds(immunityFlashIntervalDuration);
             spriteRenderer.enabled = true;
-            yield return new WaitForSeconds(flashInterval);
+            yield return new WaitForSeconds(immunityFlashIntervalDuration);
 
-            elapsedTime += flashInterval * 2; // update elapsed time
+            elapsedTime += immunityFlashIntervalDuration * 2; // update elapsed time
         }
-
 
         isImmune = false;
     }
