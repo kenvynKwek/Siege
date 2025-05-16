@@ -17,10 +17,7 @@ public class EnemyHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0)
-        {
-            DestroyEnemy();
-        }
+
     }
 
     /// <summary>
@@ -30,37 +27,50 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+
+        if (health <= 0)
+        {
+            StartCoroutine(DestroyEnemy());
+        }
     }
 
     /// <summary>
-    /// Destroy the enemy game object.
+    /// Stops movement, transition to destroy animation and destroy self.
     /// </summary>
-    private void DestroyEnemy()
+    /// <returns>An IEnumerator for coroutine timing.</returns>
+    private IEnumerator DestroyEnemy()
     {
         // make enemy invalid to disable movement & not be targeted by projectiles
         gameObject.tag = "Untagged";
 
-        // destroy animation
+        // transition to destroy animation
         animator.SetBool("isDestroyed", true);
 
+        yield return null; // wait 1 frame for animator to update state
+
         float destroyAnimationDelay = animator.GetCurrentAnimatorStateInfo(0).length;
-        Destroy(gameObject, destroyAnimationDelay);
+        yield return new WaitForSeconds(destroyAnimationDelay); // wait until animation is over
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (gameObject.tag == "Enemy") // if enemy is "valid"
         {
-            // deal damage
-            PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
-
-            if (playerHealth != null && !playerHealth.isImmune)
+            if (collision.CompareTag("Player")) // if collide with player
             {
-                playerHealth.TakeDamage(damage);
+                // deal damage
+                PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
 
-                // destroy self
-                Destroy(gameObject);
+                if (playerHealth != null && !playerHealth.isImmune)
+                {
+                    playerHealth.TakeDamage(damage);
+
+                    // destroy self
+                    Destroy(gameObject);
+                }
             }
+
         }
     }
 }
