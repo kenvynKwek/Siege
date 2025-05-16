@@ -53,10 +53,14 @@ public class EnemyHealth : MonoBehaviour
         {
             // deal damage
             PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
-            if (playerHealth != null) playerHealth.TakeDamage(damage);
 
-            // destroy self ('enemy' game object)
-            Destroy(gameObject);
+            if (playerHealth != null && !playerHealth.isImmune)
+            {
+                playerHealth.TakeDamage(damage);
+
+                // destroy self
+                Destroy(gameObject);
+            }
         }
     }
 }

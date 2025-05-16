@@ -8,16 +8,12 @@ public class PlayerHealth : MonoBehaviour
     private GameManager gameManager;
 
     // immunity variables
-    private bool isImmune = false;
     private SpriteRenderer spriteRenderer;
     private float defaultImmunityDuration = 1.5f;
     private float immunityFlashIntervalDuration = 0.15f;
+    public bool isImmune = false;
 
     public GameObject[] hearts; // health UI
-
-    // event for 0 health
-    public delegate void zeroHealthAction();
-    public static event zeroHealthAction zeroHealth;
 
     // Start is called before the first frame update
     void Start()
