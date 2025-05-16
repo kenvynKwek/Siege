@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LogicManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public GameObject gameOverUI;
     public GameObject pauseUI;
 
     void OnEnable()
     {
-        PlayerHealth.zeroHealth += GameOver;
+
     }
 
     // Start is called before the first frame update
@@ -34,10 +32,8 @@ public class LogicManager : MonoBehaviour
     /// <summary>
     /// Freezes the game and displays the 'Game Over' message.
     /// </summary>
-    void GameOver()
+    public void GameOver()
     {
-        // unsubscribe from event => so its called only once
-        PlayerHealth.zeroHealth -= GameOver;
         // freeze screen
         Time.timeScale = 0f;
         // display "game over" message
