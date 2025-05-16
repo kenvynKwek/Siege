@@ -1002,6 +1002,8 @@ MonoBehaviour:
   - {fileID: 455558126}
   - {fileID: 137917555}
   - {fileID: 1928867393}
+  immunityDuration: 1.5
+  flashInterval: 0.15
 --- !u!114 &517872558
 MonoBehaviour:
   m_ObjectHideFlags: 0
