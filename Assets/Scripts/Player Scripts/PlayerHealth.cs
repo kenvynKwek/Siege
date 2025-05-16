@@ -1,13 +1,11 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     private int maxHealth = 3;
     private int currentHealth;
+    private GameManager gameManager;
 
     // immunity variables
     private bool isImmune = false;
@@ -26,14 +24,20 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentHealth <= 0) zeroHealth?.Invoke();
 
-        // health UI
+    }
+
+    /// <summary>
+    /// Updates the heatlh UI based on the "currentHealth" variable.
+    /// </summary>
+    public void UpdateHealthUI()
+    {
         for (int i = 0; i < hearts.Length; i++)
         {
             if (i < currentHealth) hearts[i].SetActive(true);
@@ -54,14 +58,23 @@ public class PlayerHealth : MonoBehaviour
         else // else not immune & get hit
         {
             // update health & UI
-
             currentHealth -= damage;
-            StartCoroutine(StartImmunity(defaultImmunityDuration));
+            UpdateHealthUI();
+
+            // death check
+            if (currentHealth <= 0)
+            {
+                gameManager.GameOver();
+            }
+            else
+            {
+                StartCoroutine(StartImmunity(defaultImmunityDuration));
+            }
         }
     }
 
     /// <summary>
-    /// This function grants the player temporary immunity.
+    /// Grants the player temporary immunity.
     /// </summary>
     /// <param name="immunityDuration">Total duration of immunity time.</param>
     /// <returns>An IEnumerator for coroutine timing.</returns>
