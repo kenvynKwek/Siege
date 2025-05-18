@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
     public bool isImmune = false;
 
     public GameObject[] hearts; // health UI
+    public GameObject hitEffectPrefab; // hit particle effect
 
     // Start is called before the first frame update
     void Start()
@@ -48,8 +50,9 @@ public class PlayerHealth : MonoBehaviour
     /// <summary>
     /// Subtracts damage from the player's currentHealth.
     /// </summary>
-    /// <param name="damage">The damage the player will take</param>
-    public void TakeDamage(int damage)
+    /// <param name="damage">The damage the player will take.</param>
+    /// <param name="hitDirection">The direction the damage came from.</param>
+    public void TakeDamage(int damage, Vector2 hitDirection)
     {
         if (isImmune) // if immune, do nth
         {
@@ -58,7 +61,7 @@ public class PlayerHealth : MonoBehaviour
         else // else not immune & get hit
         {
             // update health & UI
-            currentHealth -= damage;
+            ////////////currentHealth -= damage;
             UpdateHealthUI();
 
             // death check
@@ -69,6 +72,14 @@ public class PlayerHealth : MonoBehaviour
             else // not dead
             {
                 CameraShake.Instance.ShakeCamera(shakeDuration, shakeIntensity); // shake screen
+
+                // spawn hit particle effect at hit direction
+                float hitDirectionAngle = (float) (Math.Atan2(hitDirection.y, hitDirection.x) * Mathf.Rad2Deg);
+                hitDirectionAngle *= -1f; // negate to mirror to get correct angle
+                Quaternion hitRotation = Quaternion.Euler(hitDirectionAngle, 90f, 0f);
+                GameObject hitParticleEffect = Instantiate(hitEffectPrefab, transform.position, hitRotation);
+                Destroy(hitParticleEffect, 0.25f); // destroy after
+
                 StartCoroutine(StartImmunity(defaultImmunityDuration)); // temp player immunity
             }
         }

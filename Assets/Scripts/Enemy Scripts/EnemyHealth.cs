@@ -64,7 +64,9 @@ public class EnemyHealth : MonoBehaviour
 
                 if (playerHealth != null && !playerHealth.isImmune)
                 {
-                    playerHealth.TakeDamage(damage);
+                    // hit direction = (enemy pos - player pos).normalised
+                    Vector2 hitDirection = (transform.position - collision.transform.position).normalized;
+                    playerHealth.TakeDamage(damage, hitDirection);
 
                     // destroy self
                     Destroy(gameObject);
