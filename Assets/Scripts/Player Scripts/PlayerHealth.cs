@@ -7,6 +7,10 @@ public class PlayerHealth : MonoBehaviour
     private int currentHealth;
     private GameManager gameManager;
 
+    // camera shake variables
+    private float shakeDuration = 0.3f;
+    private float shakeIntensity = 0.025f;
+
     // immunity variables
     private SpriteRenderer spriteRenderer;
     private float defaultImmunityDuration = 1.5f;
@@ -62,9 +66,10 @@ public class PlayerHealth : MonoBehaviour
             {
                 gameManager.GameOver();
             }
-            else
+            else // not dead
             {
-                StartCoroutine(StartImmunity(defaultImmunityDuration));
+                CameraShake.Instance.ShakeCamera(shakeDuration, shakeIntensity); // shake screen
+                StartCoroutine(StartImmunity(defaultImmunityDuration)); // temp player immunity
             }
         }
     }
