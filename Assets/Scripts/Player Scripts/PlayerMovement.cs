@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private float speed = 1.1f;
+    private float slowedSpeed = 0.9f;
+
     public Rigidbody2D rb;
-    public float speed;
     public float accelerationRate;
     public float decelerationRate;
 
@@ -46,5 +48,27 @@ public class PlayerMovement : MonoBehaviour
             // Decelerate smoothly when no input is detected
             rb.velocity = Vector2.MoveTowards(rb.velocity, Vector2.zero, decelerationRate * Time.fixedDeltaTime);
         }
+    }
+
+    /// <summary>
+    /// Slows player's speed temporarily.
+    /// </summary>
+    /// <param name="duration">The duration for how long speed should be slowed.</param>
+    /// <returns></returns>
+    private IEnumerator SlowCoroutine(float duration)
+    {
+        float originalSpeed = speed;
+        speed = slowedSpeed;
+        yield return new WaitForSeconds(duration);
+        speed = originalSpeed;
+    }
+
+    /// <summary>
+    /// Applies a slow effect for player movement.
+    /// </summary>
+    /// <param name="duration">The duration for how long the player should be slowed.</param>
+    public void ApplySlow(float duration)
+    {
+        StartCoroutine(SlowCoroutine(duration));
     }
 }

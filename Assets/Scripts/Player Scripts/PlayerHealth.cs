@@ -21,6 +21,15 @@ public class PlayerHealth : MonoBehaviour
     public GameObject[] hearts; // health UI
     public GameObject hitEffectPrefab; // hit particle effect
 
+    // slow effects
+    private PlayerMovement playerMovement;
+    private float slowDuration = 2f;
+
+    void Awake()
+    {
+        playerMovement = GetComponent<PlayerMovement>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -78,6 +87,7 @@ public class PlayerHealth : MonoBehaviour
                 Destroy(hitParticleEffect, 0.25f); // destroy after
 
                 StartCoroutine(StartImmunity(defaultImmunityDuration)); // temp player immunity
+                playerMovement.ApplySlow(slowDuration); // slow player speed
             }
         }
     }

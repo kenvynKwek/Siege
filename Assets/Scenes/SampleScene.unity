@@ -983,7 +983,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 517872554}
-  speed: 1.1
   accelerationRate: 7
   decelerationRate: 7
 --- !u!114 &517872557
@@ -999,8 +998,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isImmune: 0
-  shakeDuration: 0.3
-  shakeIntensity: 0.1
+  shakeDuration: 0.5
+  shakeIntensity: 0.05
   hearts:
   - {fileID: 455558126}
   - {fileID: 137917555}
