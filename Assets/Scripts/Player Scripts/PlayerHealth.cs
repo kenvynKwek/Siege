@@ -8,15 +8,15 @@ public class PlayerHealth : MonoBehaviour
     private int currentHealth;
     private GameManager gameManager;
 
-    // camera shake variables
-    private float shakeDuration = 0.3f;
-    private float shakeIntensity = 0.025f;
-
     // immunity variables
     private SpriteRenderer spriteRenderer;
     private float defaultImmunityDuration = 1.5f;
     private float immunityFlashIntervalDuration = 0.15f;
     public bool isImmune = false;
+
+    // camera shake variables
+    public float shakeDuration = 0.5f;
+    public float shakeIntensity = 0.05f;
 
     public GameObject[] hearts; // health UI
     public GameObject hitEffectPrefab; // hit particle effect
@@ -52,7 +52,7 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     /// <param name="damage">The damage the player will take.</param>
     /// <param name="hitDirection">The direction the damage came from.</param>
-    public void TakeDamage(int damage, Vector2 hitDirection)
+    public void TakeDamage(int damage)
     {
         if (isImmune) // if immune, do nth
         {
@@ -73,11 +73,8 @@ public class PlayerHealth : MonoBehaviour
             {
                 CameraShake.Instance.ShakeCamera(shakeDuration, shakeIntensity); // shake screen
 
-                // spawn hit particle effect at hit direction
-                float hitDirectionAngle = (float) (Math.Atan2(hitDirection.y, hitDirection.x) * Mathf.Rad2Deg);
-                hitDirectionAngle *= -1f; // negate to mirror to get correct angle
-                Quaternion hitRotation = Quaternion.Euler(hitDirectionAngle, 90f, 0f);
-                GameObject hitParticleEffect = Instantiate(hitEffectPrefab, transform.position, hitRotation);
+                // spawn hit particle effect
+                GameObject hitParticleEffect = Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
                 Destroy(hitParticleEffect, 0.25f); // destroy after
 
                 StartCoroutine(StartImmunity(defaultImmunityDuration)); // temp player immunity

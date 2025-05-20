@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
@@ -64,9 +65,7 @@ public class EnemyHealth : MonoBehaviour
 
                 if (playerHealth != null && !playerHealth.isImmune)
                 {
-                    // hit direction = (enemy pos - player pos).normalised
-                    Vector2 hitDirection = (transform.position - collision.transform.position).normalized;
-                    playerHealth.TakeDamage(damage, hitDirection);
+                    playerHealth.TakeDamage(damage);
 
                     // destroy self
                     Destroy(gameObject);

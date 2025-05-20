@@ -190,6 +190,7 @@ MonoBehaviour:
   health: 1
   animator: {fileID: 1288170906316595519}
   damage: 1
+  hitEffectPrefab: {fileID: 580051365562233113, guid: 21180325057fa904690b28c8d8bb4ded, type: 3}
 --- !u!95 &1288170906316595519
 Animator:
   serializedVersion: 5
