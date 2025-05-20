@@ -69,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="duration">The duration for how long the player should be slowed.</param>
     public void ApplySlow(float duration)
     {
+        StopCoroutine("SlowCoroutine");
         StartCoroutine(SlowCoroutine(duration));
     }
 }
