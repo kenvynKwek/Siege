@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float speed = 1.1f;
-    private float slowedSpeed = 0.9f;
+    private float originalSpeed = 1.1f;
+    private float speed;
+    private float slowedSpeed = 0.85f;
 
     public Rigidbody2D rb;
     public float accelerationRate;
@@ -18,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        speed = originalSpeed;
     }
 
     // Update is called once per frame
@@ -57,7 +58,6 @@ public class PlayerMovement : MonoBehaviour
     /// <returns></returns>
     private IEnumerator SlowCoroutine(float duration)
     {
-        float originalSpeed = speed;
         speed = slowedSpeed;
         yield return new WaitForSeconds(duration);
         speed = originalSpeed;

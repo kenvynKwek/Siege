@@ -23,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
 
     // slow effects
     private PlayerMovement playerMovement;
-    private float slowDuration = 2f;
+    private float slowDuration = 1.5f;
 
     void Awake()
     {
