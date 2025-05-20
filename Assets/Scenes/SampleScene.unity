@@ -983,7 +983,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 517872554}
-  speed: 1.1
   accelerationRate: 7
   decelerationRate: 7
 --- !u!114 &517872557
@@ -998,12 +997,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77dd861316c644da2099a1bf3bcfa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isImmune: 0
+  shakeDuration: 0.5
+  shakeIntensity: 0.05
   hearts:
   - {fileID: 455558126}
   - {fileID: 137917555}
   - {fileID: 1928867393}
-  immunityDuration: 1.5
-  flashInterval: 0.15
+  hitEffectPrefab: {fileID: 580051365562233113, guid: 21180325057fa904690b28c8d8bb4ded, type: 3}
 --- !u!114 &517872558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1011,7 +1012,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 517872550}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c04c9436455657345b38ec1cc25abe26, type: 3}
   m_Name: 
@@ -1031,6 +1032,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1125,6 +1127,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 517872551}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e6e947a014b69429762d7dc84a9df6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &834082460
 PrefabInstance:
   m_ObjectHideFlags: 0

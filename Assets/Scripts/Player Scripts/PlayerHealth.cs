@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -13,7 +14,21 @@ public class PlayerHealth : MonoBehaviour
     private float immunityFlashIntervalDuration = 0.15f;
     public bool isImmune = false;
 
+    // camera shake variables
+    public float shakeDuration = 0.5f;
+    public float shakeIntensity = 0.05f;
+
     public GameObject[] hearts; // health UI
+    public GameObject hitEffectPrefab; // hit particle effect
+
+    // slow effects
+    private PlayerMovement playerMovement;
+    private float slowDuration = 1.5f;
+
+    void Awake()
+    {
+        playerMovement = GetComponent<PlayerMovement>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +59,8 @@ public class PlayerHealth : MonoBehaviour
     /// <summary>
     /// Subtracts damage from the player's currentHealth.
     /// </summary>
-    /// <param name="damage">The damage the player will take</param>
+    /// <param name="damage">The damage the player will take.</param>
+    /// <param name="hitDirection">The direction the damage came from.</param>
     public void TakeDamage(int damage)
     {
         if (isImmune) // if immune, do nth
@@ -54,7 +70,7 @@ public class PlayerHealth : MonoBehaviour
         else // else not immune & get hit
         {
             // update health & UI
-            currentHealth -= damage;
+            ////////////currentHealth -= damage;
             UpdateHealthUI();
 
             // death check
@@ -62,9 +78,16 @@ public class PlayerHealth : MonoBehaviour
             {
                 gameManager.GameOver();
             }
-            else
+            else // not dead
             {
-                StartCoroutine(StartImmunity(defaultImmunityDuration));
+                CameraShake.Instance.ShakeCamera(shakeDuration, shakeIntensity); // shake screen
+
+                // spawn hit particle effect
+                GameObject hitParticleEffect = Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
+                Destroy(hitParticleEffect, 0.25f); // destroy after
+
+                StartCoroutine(StartImmunity(defaultImmunityDuration)); // temp player immunity
+                playerMovement.ApplySlow(slowDuration); // slow player speed
             }
         }
     }
