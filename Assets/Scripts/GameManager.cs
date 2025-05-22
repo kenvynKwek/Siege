@@ -1,15 +1,15 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private float slowMoTimeScale = 0.15f;
+    private float gradualFreezeTiming = 5f;
+
     public GameObject gameOverUI;
     public GameObject pauseUI;
-
-    void OnEnable()
-    {
-
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -34,14 +34,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
-        // TODO: change to slow mo camera pan over to player + zoom in
+        // change to slow mo camera pan over to player + zoom in
+        Time.timeScale = slowMoTimeScale;
+
+        // stop player movement
 
 
-
-        // freeze screen
-        Time.timeScale = 0f;
         // display "game over" message
         gameOverUI.SetActive(true);
+
+        // completely freeze after short delay
+        StartCoroutine(GradualFreeze(gradualFreezeTiming));
 
         // show stats
     }
@@ -57,6 +60,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    /// <summary>
+    /// Freezes game & shows pause UI.
+    /// </summary>
     void PauseGame()
     {
         // freeze
@@ -65,11 +71,34 @@ public class GameManager : MonoBehaviour
         pauseUI.SetActive(true);
     }
 
+    /// <summary>
+    /// Unfreeze game & hide pause UI.
+    /// </summary>
     void ResumeGame()
     {
         // unfreeze
         Time.timeScale = 1f;
         // set "pause" message to inactive
         pauseUI.SetActive(false);
+    }
+
+    /// <summary>
+    /// Gradually freezes game.
+    /// </summary>
+    /// <param name="delay">The delay duration.</param>
+    /// <returns>An IEnumerator for coroutine timing.</returns>
+    private IEnumerator GradualFreeze(float delay)
+    {
+        float start = Time.timeScale;
+        float elapsed = 0f;
+
+        while (elapsed < delay)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            Time.timeScale = Mathf.SmoothStep(start, 0f, elapsed / delay);
+            yield return null;
+        }
+
+        Time.timeScale = 0f;
     }
 }
