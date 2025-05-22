@@ -7,9 +7,15 @@ public class GameManager : MonoBehaviour
 {
     private float slowMoTimeScale = 0.15f;
     private float gradualFreezeTiming = 5f;
+    private GameObject player;
 
     public GameObject gameOverUI;
     public GameObject pauseUI;
+
+    void Awake()
+    {
+        player = GameObject.Find("Player");
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -34,17 +40,19 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
-        // change to slow mo camera pan over to player + zoom in
-        Time.timeScale = slowMoTimeScale;
+        player.GetComponent<PlayerMovement>().StopMovement(); // stop player movement
+        player.GetComponent<PlayerHealth>().MakePlayerInvalid();
 
-        // stop player movement
+        Time.timeScale = slowMoTimeScale; // slow mo
 
-
-        // display "game over" message
-        gameOverUI.SetActive(true);
+        // zoom in camera pan to player
 
         // completely freeze after short delay
         StartCoroutine(GradualFreeze(gradualFreezeTiming));
+
+        // add gradual fade for this
+        // display "game over" message
+        gameOverUI.SetActive(true);
 
         // show stats
     }

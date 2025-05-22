@@ -116,4 +116,12 @@ public class PlayerHealth : MonoBehaviour
 
         isImmune = false;
     }
+
+    /// <summary>
+    /// Makes the player into a invalid game object.
+    /// </summary>
+    public void MakePlayerInvalid()
+    {
+        isImmune = true;
+    }
 }

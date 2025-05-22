@@ -72,4 +72,12 @@ public class PlayerMovement : MonoBehaviour
         StopCoroutine("SlowCoroutine");
         StartCoroutine(SlowCoroutine(duration));
     }
+
+    /// <summary>
+    /// Stops the player movement.
+    /// </summary>
+    public void StopMovement()
+    {
+        speed = 0f;
+    }
 }
