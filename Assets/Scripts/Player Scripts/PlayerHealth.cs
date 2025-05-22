@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour
 
     // immunity variables
     private SpriteRenderer spriteRenderer;
-    private float defaultImmunityDuration = 1.5f;
+    private float defaultImmunityDuration = 2f;
     private float immunityFlashIntervalDuration = 0.15f;
     public bool isImmune = false;
 
@@ -23,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
 
     // slow effects
     private PlayerMovement playerMovement;
-    private float slowDuration = 1.5f;
+    private float slowDuration = 2f;
 
     void Awake()
     {
@@ -70,7 +70,7 @@ public class PlayerHealth : MonoBehaviour
         else // else not immune & get hit
         {
             // update health & UI
-            ////////////currentHealth -= damage;
+            currentHealth -= damage;
             UpdateHealthUI();
 
             // death check
