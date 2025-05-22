@@ -34,10 +34,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
+        // TODO: change to slow mo camera pan over to player + zoom in
+
+
+
         // freeze screen
         Time.timeScale = 0f;
         // display "game over" message
         gameOverUI.SetActive(true);
+
+        // show stats
     }
 
     /// <summary>

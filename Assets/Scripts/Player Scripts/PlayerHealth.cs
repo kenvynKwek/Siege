@@ -70,8 +70,14 @@ public class PlayerHealth : MonoBehaviour
         else // else not immune & get hit
         {
             // update health & UI
-            currentHealth -= damage;
+            /////// currentHealth -= damage;
             UpdateHealthUI();
+
+            CameraShake.Instance.ShakeCamera(shakeDuration, shakeIntensity); // shake screen
+
+            // spawn hit particle effect
+            GameObject hitParticleEffect = Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
+            Destroy(hitParticleEffect, 0.25f); // destroy after
 
             // death check
             if (currentHealth <= 0)
@@ -80,12 +86,6 @@ public class PlayerHealth : MonoBehaviour
             }
             else // not dead
             {
-                CameraShake.Instance.ShakeCamera(shakeDuration, shakeIntensity); // shake screen
-
-                // spawn hit particle effect
-                GameObject hitParticleEffect = Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
-                Destroy(hitParticleEffect, 0.25f); // destroy after
-
                 StartCoroutine(StartImmunity(defaultImmunityDuration)); // temp player immunity
                 playerMovement.ApplySlow(slowDuration); // slow player speed
             }
