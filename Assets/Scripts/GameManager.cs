@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     private float slowMoTimeScale = 0.15f;
     private float gradualFreezeTiming = 5f;
     private GameObject player;
+    private Coroutine gradualFreezeCoroutine;
 
     public GameObject gameOverUI;
     public GameObject pauseUI;
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour
         // zoom in camera pan to player
 
         // completely freeze after short delay
-        StartCoroutine(GradualFreeze(gradualFreezeTiming));
+        gradualFreezeCoroutine = StartCoroutine(GradualFreeze(gradualFreezeTiming));
 
         // add gradual fade for this
         // display "game over" message
@@ -62,6 +64,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void RestartGame()
     {
+        if (gradualFreezeCoroutine != null)
+        {
+            StopCoroutine(gradualFreezeCoroutine);
+            gradualFreezeCoroutine = null;    
+        }
+        
         // unfreeze
         Time.timeScale = 1f;
         // reload scene
