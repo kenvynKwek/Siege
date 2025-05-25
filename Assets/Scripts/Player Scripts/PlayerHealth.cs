@@ -85,7 +85,7 @@ public class PlayerHealth : MonoBehaviour
             }
             else // not dead
             {
-                CameraShake.Instance.ShakeCamera(shakeDuration, shakeIntensity); // shake screen
+                CameraEffects.Instance.ShakeCamera(shakeDuration, shakeIntensity); // shake screen
                 StartCoroutine(StartImmunity(defaultImmunityDuration)); // temp player immunity
                 playerMovement.ApplySlow(slowDuration); // slow player speed
             }

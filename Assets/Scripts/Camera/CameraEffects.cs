@@ -1,9 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class CameraShake : MonoBehaviour
+public class CameraEffects : MonoBehaviour
 {
-    public static CameraShake Instance;
+    public static CameraEffects Instance;
+    public Transform player;
 
     void Awake()
     {
@@ -19,7 +20,11 @@ public class CameraShake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // camera follow player
+        if (player != null)
+        {
+            transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
+        }
     }
 
     /// <summary>
