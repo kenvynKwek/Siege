@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     private float gradualFreezeTiming = 5f;
     private GameObject player;
     private Coroutine gradualFreezeCoroutine;
+    private float zoomInSize = 0.8f;
+    private float zoomInTime = 2.5f;
 
     public GameObject gameOverUI;
     public GameObject pauseUI;
@@ -48,6 +50,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = slowMoTimeScale; // slow mo
 
         // zoom in camera pan to player
+        CameraEffects.Instance.ZoomIn(zoomInSize, zoomInTime);
 
         // completely freeze after short delay
         gradualFreezeCoroutine = StartCoroutine(GradualFreeze(gradualFreezeTiming));
