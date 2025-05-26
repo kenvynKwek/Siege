@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,9 +11,12 @@ public class GameManager : MonoBehaviour
     private Coroutine gradualFreezeCoroutine;
     private float zoomInSize = 0.8f;
     private float zoomInTime = 2.5f;
+    private float gameOverUIDelay = 4.5f;
+    private float tintOverlayFadeTiming = 3f;
 
     public GameObject gameOverUI;
     public GameObject pauseUI;
+    public Image gameOverOverlayTint;
 
     void Awake()
     {
@@ -39,10 +41,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Freezes the game and displays the 'Game Over' message.
-    /// </summary>
-    public void GameOver()
+    private IEnumerator GameOverSequence()
     {
         player.GetComponent<PlayerMovement>().StopMovement(); // stop player movement
         player.GetComponent<PlayerHealth>().MakePlayerInvalid();
@@ -52,14 +51,38 @@ public class GameManager : MonoBehaviour
         // zoom in camera pan to player
         CameraEffects.Instance.ZoomIn(zoomInSize, zoomInTime);
 
-        // completely freeze after short delay
+        // gradually freeze timescale
         gradualFreezeCoroutine = StartCoroutine(GradualFreeze(gradualFreezeTiming));
 
         // add gradual fade for this
         // display "game over" message
-        gameOverUI.SetActive(true);
 
+        // delay showing game over UI (let the camera pan & gradual freeze play out first)
+        yield return new WaitForSecondsRealtime(gameOverUIDelay);
+        gameOverUI.SetActive(true);
         // show stats
+
+        // fade in tint overlay
+        float elapsed = 0f;
+
+        while (elapsed < tintOverlayFadeTiming)
+        {
+            Color colour = gameOverOverlayTint.color;
+            float t = Mathf.Clamp01(elapsed / tintOverlayFadeTiming);
+            colour.a = Mathf.Lerp(0, 1, t);
+            gameOverOverlayTint.color = colour;
+
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// Plays the game over sequence.
+    /// </summary>
+    public void GameOver()
+    {
+        StartCoroutine(GameOverSequence());
     }
 
     /// <summary>
@@ -70,9 +93,9 @@ public class GameManager : MonoBehaviour
         if (gradualFreezeCoroutine != null)
         {
             StopCoroutine(gradualFreezeCoroutine);
-            gradualFreezeCoroutine = null;    
+            gradualFreezeCoroutine = null;
         }
-        
+
         // unfreeze
         Time.timeScale = 1f;
         // reload scene
