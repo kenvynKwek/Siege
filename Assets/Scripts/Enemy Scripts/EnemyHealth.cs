@@ -5,9 +5,16 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    private GameObject gameManager;
+
     public float health;
     public Animator animator;
     public int damage;
+
+    void Awake()
+    {
+        gameManager = GameObject.Find("GameManager");
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +50,8 @@ public class EnemyHealth : MonoBehaviour
     {
         // make enemy invalid to disable movement & not be targeted by projectiles
         gameObject.tag = "Untagged";
+
+        gameManager.GetComponent<GameManager>().AddKillCount(); // increment kill count
 
         // transition to destroy animation
         animator.SetBool("isDestroyed", true);

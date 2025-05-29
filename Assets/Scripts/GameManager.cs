@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,9 +15,14 @@ public class GameManager : MonoBehaviour
     private float gameOverUIDelay = 4.5f;
     private float tintOverlayFadeTiming = 3f;
 
-    public GameObject gameOverUI;
     public GameObject pauseUI;
+    // game over variables
+    private int killCount = 0;
+    private float survivalTime = 0f;
+    public GameObject gameOverUI;
     public Image gameOverOverlayTint;
+    public TMPro.TextMeshProUGUI killsNumber;
+    public TMPro.TextMeshProUGUI survivalTimeNumber;
 
     void Awake()
     {
@@ -39,6 +45,12 @@ public class GameManager : MonoBehaviour
             if (!pauseUI.activeSelf && Input.GetKeyDown(KeyCode.Escape)) PauseGame();
             else if (pauseUI.activeSelf && Input.GetKeyDown(KeyCode.Escape)) ResumeGame();
         }
+
+        // update survival time
+        if (!pauseUI.activeSelf)
+        {
+            survivalTime += Time.unscaledDeltaTime;
+        }
     }
 
     private IEnumerator GameOverSequence()
@@ -60,7 +72,12 @@ public class GameManager : MonoBehaviour
         // delay showing game over UI (let the camera pan & gradual freeze play out first)
         yield return new WaitForSecondsRealtime(gameOverUIDelay);
         gameOverUI.SetActive(true);
-        // show stats
+
+        // update stats
+        killsNumber.text = $"{killCount}";
+        int minutes = Mathf.FloorToInt(survivalTime / 60f);
+        int seconds = Mathf.FloorToInt(survivalTime % 60);
+        survivalTimeNumber.text = $"{minutes}m {seconds}s";
 
         // fade in tint overlay
         float elapsed = 0f;
@@ -142,5 +159,13 @@ public class GameManager : MonoBehaviour
         }
 
         Time.timeScale = 0f;
+    }
+
+    /// <summary>
+    /// Increment kill count.
+    /// </summary>
+    public void AddKillCount()
+    {
+        killCount++;
     }
 }
