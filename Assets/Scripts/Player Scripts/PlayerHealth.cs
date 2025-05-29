@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private int maxHealth = 3;
+    private int maxHealth = 1;
     private int currentHealth;
     private GameManager gameManager;
 
@@ -36,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         spriteRenderer = GetComponent<SpriteRenderer>();
         gameManager = FindObjectOfType<GameManager>();
+        UpdateHealthUI();
     }
 
     // Update is called once per frame
@@ -73,6 +74,10 @@ public class PlayerHealth : MonoBehaviour
             currentHealth -= damage;
             UpdateHealthUI();
 
+            // spawn hit particle effect
+            GameObject hitParticleEffect = Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
+            Destroy(hitParticleEffect, 0.25f); // destroy after
+
             // death check
             if (currentHealth <= 0)
             {
@@ -80,12 +85,7 @@ public class PlayerHealth : MonoBehaviour
             }
             else // not dead
             {
-                CameraShake.Instance.ShakeCamera(shakeDuration, shakeIntensity); // shake screen
-
-                // spawn hit particle effect
-                GameObject hitParticleEffect = Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
-                Destroy(hitParticleEffect, 0.25f); // destroy after
-
+                CameraEffects.Instance.ShakeCamera(shakeDuration, shakeIntensity); // shake screen
                 StartCoroutine(StartImmunity(defaultImmunityDuration)); // temp player immunity
                 playerMovement.ApplySlow(slowDuration); // slow player speed
             }
@@ -115,5 +115,13 @@ public class PlayerHealth : MonoBehaviour
         }
 
         isImmune = false;
+    }
+
+    /// <summary>
+    /// Makes the player into a invalid game object.
+    /// </summary>
+    public void MakePlayerInvalid()
+    {
+        isImmune = true;
     }
 }
