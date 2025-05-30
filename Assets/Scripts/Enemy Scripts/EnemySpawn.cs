@@ -7,6 +7,7 @@ using UnityEngine;
 public class EnemySpawn : MonoBehaviour
 {
     private float spawnTimer = 0f;
+    private bool canSpawn = false;
 
     public GameObject enemy;
     public float spawnRate;
@@ -20,14 +21,17 @@ public class EnemySpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spawnTimer += Time.deltaTime;
-
-        if (spawnTimer >= spawnRate)
+        if (canSpawn)
         {
-            Vector3 spawnPoint = getRandomEnemySpawnPoint();
-            Instantiate(enemy, spawnPoint, transform.rotation);
+            spawnTimer += Time.unscaledDeltaTime;
 
-            spawnTimer = 0f;
+            if (spawnTimer >= spawnRate)
+            {
+                Vector3 spawnPoint = getRandomEnemySpawnPoint();
+                Instantiate(enemy, spawnPoint, transform.rotation);
+
+                spawnTimer = 0f;
+            }
         }
     }
 
@@ -46,5 +50,14 @@ public class EnemySpawn : MonoBehaviour
         Vector3 spawnPoint = new Vector3(Random.Range(left, right), Random.Range(bottom, top), 0f);
 
         return spawnPoint;
+    }
+
+    /// <summary>
+    /// Enables or disables enemy spawning.
+    /// </summary>
+    /// <param name="spawn">True or false to enable enemy spawning.</param>
+    public void SetCanSpawn(bool spawn)
+    {
+        canSpawn = spawn;
     }
 }
