@@ -180,5 +180,7 @@ public class GameManager : MonoBehaviour
     public void SetGameplay(bool gameplay)
     {
         enemySpawner.GetComponent<EnemySpawn>().SetCanSpawn(gameplay);
+        // obstacle spawner
+        // power up spawner
     }
 }
