@@ -2,14 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ObstacleBase : MonoBehaviour
+public class Puddle : ObstacleBase
 {
-    [Header("Timings")]
-    public float spawnDelayTime;
-    public float activeTime;
-
-    protected Collider2D col;
-
     // Start is called before the first frame update
     void Start()
     {
