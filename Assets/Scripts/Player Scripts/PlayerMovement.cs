@@ -80,4 +80,21 @@ public class PlayerMovement : MonoBehaviour
     {
         speed = 0f;
     }
+
+    /// <summary>
+    /// Slows player's speed indefinitely.
+    /// </summary>
+    /// <param name="speed">The speed to be slowed to.</param>
+    public void SlowSpeed(float speed)
+    {
+        this.speed = speed;
+    }
+
+    /// <summary>
+    /// Returns player's speed to original speed.
+    /// </summary>
+    public void OriginalSpeed()
+    {
+        speed = originalSpeed;
+    }
 }

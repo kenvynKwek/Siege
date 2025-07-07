@@ -19,7 +19,6 @@ public abstract class ObstacleBase : MonoBehaviour
         // spawn obstacle with random rotation
         float z = Random.Range(0f, 360f);
         transform.rotation = Quaternion.Euler(0f, 0f, z);
-        Debug.Log(transform.rotation);
     }
 
     // Update is called once per frame
