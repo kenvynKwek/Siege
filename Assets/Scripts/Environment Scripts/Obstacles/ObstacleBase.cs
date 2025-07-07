@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class ObstacleBase : MonoBehaviour
@@ -10,10 +8,18 @@ public abstract class ObstacleBase : MonoBehaviour
 
     protected Collider2D col;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        col = GetComponent<Collider2D>();
+    }
+
+    // Start is called before the first frame update
+    protected virtual void Start()
+    {
+        // spawn obstacle with random rotation
+        float z = Random.Range(0f, 360f);
+        transform.rotation = Quaternion.Euler(0f, 0f, z);
+        Debug.Log(transform.rotation);
     }
 
     // Update is called once per frame
