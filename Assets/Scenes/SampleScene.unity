@@ -1472,7 +1472,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ce3a6211db684449fa30a351a3d365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutDuration: 3
 --- !u!1001 &834082460
 PrefabInstance:
   m_ObjectHideFlags: 0
