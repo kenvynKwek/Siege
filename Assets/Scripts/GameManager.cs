@@ -25,12 +25,12 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI survivalTimeNumber;
 
     // play/pause gameplay variables
-    private GameObject enemySpawner;
+    private GameObject spawnManager;
 
     void Awake()
     {
         player = GameObject.Find("Player");
-        enemySpawner = GameObject.Find("Enemy Spawner");
+        spawnManager = GameObject.Find("Spawn Manager");
     }
 
     // Start is called before the first frame update
@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
     /// <param name="gameplay">True or false to enable gameplay.</param>
     public void SetGameplay(bool gameplay)
     {
-        enemySpawner.GetComponent<EnemySpawn>().SetCanSpawn(gameplay);
+        spawnManager.GetComponent<EnemySpawner>().SetCanSpawn(gameplay);
         // obstacle spawner
         // power up spawner
     }

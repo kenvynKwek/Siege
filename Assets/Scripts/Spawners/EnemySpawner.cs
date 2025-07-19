@@ -4,7 +4,7 @@ using UnityEngine;
 
 // randomly spawn an enemy at regular intervals outside the play area perimeter
 
-public class EnemySpawn : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
     private float spawnTimer = 0f;
     private bool canSpawn = false;
